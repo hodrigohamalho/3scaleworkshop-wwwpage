@@ -244,9 +244,12 @@ function callService(map, token){
 
             var latitude = item.location.latitude.toString();
             var longitude = item.location.longitude.toString();
-            latitude = latitude.slice(0,2) + "." + latitude.slice(2);
-            longitude = longitude.slice(0,2) + "." + longitude.slice(2);
             
+            var pos = (latitude.startsWith("-")) ? 3 : 2;
+            latitude = latitude.slice(0,pos) + "." + latitude.slice(pos);
+            var pos = (longitude.startsWith("-")) ? 3 : 2;
+            longitude = longitude.slice(0,pos) + "." + longitude.slice(pos);
+
             console.log("after - lat: "+latitude+" long: "+longitude);
             var marker = L.marker([latitude, longitude]).addTo(map);
             marker.bindPopup('<b>' + item.name + '</b><br>' + item.bank_id);
