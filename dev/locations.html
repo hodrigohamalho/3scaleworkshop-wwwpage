@@ -201,9 +201,9 @@
             // Keycloak Config Start
 
             var keyOptions = {
-    url: 'SSO_URL/auth',
-    realm: 'SSO_REALM',
-    clientId: 'CLIENT_ID'
+            url: 'SSO_URL/auth',
+            realm: 'SSO_REALM',
+            clientId: 'CLIENT_ID'
 };
 
 var keycloak = Keycloak(keyOptions);
@@ -228,31 +228,24 @@ var opts = {
 
 var loginUrl = keycloak.createLoginUrl(opts);
 document.getElementById('loginUrl').href = loginUrl;
-
-            // Keycloak Config End            
-        });
-        function callService(map 
-            /* Keycloack Params Start*/ 
-	, token
-            /* Keycloak Params End */){
-            $.ajax({
-                url: 'API_BACKEND_URL',
-                // Keycloak Ajax Start
+});
+function callService(map, token){
+    $.ajax({
+        url: 'API_BACKEND_URL',
 		headers: {
-     'Authorization': 'Bearer ' + token
-	},
-                // Keycloak Ajax End
-                dataType: 'json'
-            }).done(function(data) {
-		console.log(data)
-                data.slice(0, 3).map(function(item) {
-                    var marker = L.marker([item.location.latitude, item.location.longitude]).addTo(map);
-                    marker.bindPopup('<b>' + item.name);
-                });
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log( 'Error:' + JSON.stringify(textStatus));
-            });
-        }
-    </script>
+            'Authorization': 'Bearer ' + token
+	    },
+        dataType: 'json'
+    }).done(function(data) {
+        console.log(data)
+        data.atms.forEach(function(item){
+            var marker = L.marker([item.location.latitude, item.location.longitude]).addTo(map);
+            marker.bindPopup('<b>' + item.name);
+        });
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log( 'Error:' + JSON.stringify(textStatus));
+    });
+}
+</script>
 </body>
 </html>
