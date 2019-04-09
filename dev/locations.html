@@ -239,7 +239,15 @@ function callService(map, token){
     }).done(function(data) {
         console.log(data)
         data.atms.forEach(function(item){
-            var marker = L.marker([item.location.latitude, item.location.longitude]).addTo(map);
+            console.log("lat: "+item.location.latitude+" long: "+item.location.longitude);
+            console.log("Parsing values, needed because the mock return invalid values");
+            latitude = latitude.slice(0,2) + "." + latitude.slice(2);
+            var latitude = item.location.latitude.toString();
+            var longitude = item.location.longitude.toString();
+            latitude = latitude.slice(0,2) + "." + latitude.slice(2);
+            longitude = longitude.slice(0,2) + "." + longitude.slice(2);
+            console.log("after - lat: "+latitude+" long: "+longitude);
+            var marker = L.marker([latitude, longitude]).addTo(map);
             marker.bindPopup('<b>' + item.name + '</b><br>' + item.bank_id);
         });
     }).fail(function (jqXHR, textStatus, errorThrown) {
