@@ -240,7 +240,7 @@ function callService(map, token){
         console.log(data)
         data.atms.forEach(function(item){
             var marker = L.marker([item.location.latitude, item.location.longitude]).addTo(map);
-            marker.bindPopup('<b>' + item.name);
+            marker.bindPopup('<b>' + item.name + '</b><br>' + item.bank_id);
         });
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.log( 'Error:' + JSON.stringify(textStatus));
